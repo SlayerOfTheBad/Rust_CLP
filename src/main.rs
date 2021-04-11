@@ -12,12 +12,23 @@ fn main() {
         return;
     }
 
-    let query = &args[1];
-    let filename = &args[2];
+    let config = parse_config(&args);
 
-    let contents = fs::read_to_string(filename)
+    let contents = fs::read_to_string(config.filename)
         .expect("Something went wrong when reading the file");
 
 
-    println!("Searching for {} in text \n{}.", query, contents);
+    println!("Searching for {} in text:\n{}.", config.query, contents);
+}
+
+struct Config {
+    query: String,
+    filename: String,
+}
+
+fn parse_config(args: &[String]) -> Config {
+    let query = args[1].clone();
+    let filename = args[2].clone();
+
+    Config { query, filename }
 }
